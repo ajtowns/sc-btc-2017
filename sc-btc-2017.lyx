@@ -1,0 +1,3083 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{url}
+\usepackage{relsize}
+\renewcommand*{\UrlFont}{\ttfamily\smaller\relax}
+\date{5 November 2017}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language australian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type numerical
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 4cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 2
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Changes without Unanimous Consent
+\end_layout
+
+\begin_layout Author
+Anthony Towns
+\end_layout
+
+\begin_layout Abstract
+Considerations regarding handling of proposed changes to Bitcoin consensus
+ rules in the absence of unanimous consent, including economic analysis
+ and two closely related technical proposals.
+\end_layout
+
+\begin_layout Section
+Background
+\end_layout
+
+\begin_layout Subsubsection*
+Consensus mechanism
+\end_layout
+
+\begin_layout Quote
+
+\emph on
+[Bitcoin nodes] vote with their CPU power, expressing their acceptance of
+ valid blocks by working on extending them and rejecting invalid blocks
+ by refusing to work on them.
+ Any needed rules and incentives can be enforced with this consensus mechanism.
+ 
+\emph default
+— Satoshi Nakamoto
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "satoshi"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bitcoin's 
+\emph on
+consensus mechanism
+\emph default
+ can be divided into two components: a set of 
+\emph on
+validation rules
+\emph default
+ determining whether some particular addition to the ledger will be considered
+ possible, and the 
+\emph on
+proof of work mechanism
+\emph default
+ that allows the network to trustlessly come to agreement as to which of
+ many possible ledgers will be considered correct.
+ Combined, these two facets of the consensus mechanism allows all nodes
+ in the Bitcoin network to agree on a single transaction history for the
+ Bitcoin currency.
+\end_layout
+
+\begin_layout Standard
+A meta issue arises when considering how the network should come to an agreement
+ when changes to the consensus mechanism should occur.
+ While the consensus mechanism itself can be precisely specified and automated,
+ changes to the consensus mechanism cannot be – after all, if they were,
+ they would simply already be part of the consensus mechanism.
+\end_layout
+
+\begin_layout Subsubsection*
+Unanimous consent to consensus changes
+\end_layout
+
+\begin_layout Standard
+If proposed changes to the consensus mechanism have 
+\emph on
+unanimous consent
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In normal usage 
+\begin_inset Quotes eld
+\end_inset
+
+unanimous
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+consensus
+\begin_inset Quotes erd
+\end_inset
+
+ are close synonyms.
+ However because 
+\begin_inset Quotes eld
+\end_inset
+
+consensus
+\begin_inset Quotes erd
+\end_inset
+
+ has a technical meaning in the context of Bitcoin, we will only use it
+ to refer to the rules being enforced by the Bitcoin software, and instead
+ use 
+\begin_inset Quotes eld
+\end_inset
+
+consent
+\begin_inset Quotes erd
+\end_inset
+
+ to refer to someone's willingness to accept a particular change to those
+ rules, and finally 
+\begin_inset Quotes eld
+\end_inset
+
+unanimous consent
+\begin_inset Quotes erd
+\end_inset
+
+ to refer to the case when everyone is willing to accept a particular change
+ to the consensus rules.
+\end_layout
+
+\end_inset
+
+, then life is easy: developers are happy to accept the patches to the code
+ implementing the mechanism, miners are happy to deploy and run the updated
+ software, validating nodes are happy to enforce the new rule set, the Bitcoin
+ economy is happy to continue respecting the resulting ledger, miners and
+ users can easily indicate via both formal and informal channels that they
+ are supporting and enforcing the changes making the risk of chain splits
+ arbitrarily low, and regulators are happy to refrain from making anyone
+ unhappy.
+\end_layout
+
+\begin_layout Standard
+In this happy scenario, it is easy for developers to take the lead in making
+ changes – changes to the software need to be made before the rest of the
+ community can make use of the updated consensus mechanism after all.
+ And it is easy to view many of the changes to Bitcoin's consensus mechanisms
+ through this light, including Bitcoin's initial introduction
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bitcoin-0.1"
+
+\end_inset
+
+, the block size limit
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bitcoin-commit-1MB"
+
+\end_inset
+
+, the pay to script hash feature
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "p2sh-votes"
+
+\end_inset
+
+, strict DER signature encoding
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bip66-strict-der-list,bip66-strict-der-disclosure"
+
+\end_inset
+
+, or the CLTV
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "deploy-bip65-cltv"
+
+\end_inset
+
+ and CSV
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bip68-etc-csv-deploy"
+
+\end_inset
+
+ features.
+\end_layout
+
+\begin_layout Standard
+However this is only the case if there is truly unanimous consent for a
+ change.
+\end_layout
+
+\begin_layout Subsubsection*
+Opposition to consensus changes
+\end_layout
+
+\begin_layout Standard
+There are many reasons why some members of the Bitcoin community may not
+ consent to any given proposed change to the consensus mechanism:
+\end_layout
+
+\begin_layout Itemize
+Different people in the Bitcoin ecosystem may have different goals; as a
+ trivial example, regulators might propose a change in order to prevent
+ Bitcoin from being usable for criminal activity, while others may oppose
+ that change due to its impact on anonymity, fungibility, or efficiency.
+ As Bitcoin grows, it is likely to attract more people with conflicting
+ goals, increasing the frequency of this form of conflict arising.
+\end_layout
+
+\begin_layout Itemize
+There may be a lack of understanding of the impact of a change; perhaps
+ if everyone understood the actual effects of the change, everyone would
+ support (or oppose) it.
+ But it may be that many people are unable to reach this conclusion with
+ confidence, whether due to ignorance, or lack of time to fully study the
+ issue.
+ If Bitcoin adoption increases amongst people with less technical background
+ or with different attitudes to monetary policy, this class of controversy
+ is more likely to occur.
+\end_layout
+
+\begin_layout Itemize
+Bitcoin upgrades are generally designed as Pareto improvements, that is
+ either everyone in the ecosystem is made better off, or at least not made
+ any worse off.
+ It may be that some changes will not be able to be made in this manner,
+ and if so even changes that will cause a net benefit to the ecosystem,
+ are likely to be opposed by the subset of individuals disadvantaged by
+ the proposed change.
+\end_layout
+
+\begin_layout Itemize
+A proposed change may have implementation issues, resulting in opposition
+ to a concrete proposal despite widespread in-principle support.
+ Increased adoption makes this scenario more likely for a range of reasons,
+ eg more developers make it more likely that problems will be spotted earlier;
+ and higher usage will result in greater pressure to get changes done quickly,
+ in turn increasing the probability of bugs in proposed implementations.
+\end_layout
+
+\begin_layout Itemize
+Finally, if 
+\begin_inset Quotes eld
+\end_inset
+
+controversy
+\begin_inset Quotes erd
+\end_inset
+
+ is able to block an upgrade then fabricating a controversy may become an
+ effective negotiating tactic.
+ For instance if a proposed change to the consensus mechanism, X
+\emph on
+, 
+\emph default
+is opposed by some community members, and many or most of those community
+ members support some other proposed change, Y, then if supporters of X
+ oppose Y, they may be able to negotiate a mutual détente causing both changes
+ to be accepted, while if they do not oppose Y, they lack such leverage.
+\end_layout
+
+\begin_layout Standard
+Many of these aspects may be seen in Bitcoin's scaling debate, for instance
+ the segregated witness upgrade was discovered not to be a Pareto improvement
+ in so far as any miners were taking advantage of particular ASICBoost designs
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "asicboost-discovery"
+
+\end_inset
+
+; and both Bitcoin Cash and segwit2x implementations have had opposition
+ due to a lack of replay protection
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bitcoin-abc-replay-protection,btcmag-2x-replay"
+
+\end_inset
+
+.
+ It may be possible to overcome opposition due to any or all of the reasons
+ listed either by improving the proposal or implementation, or by helping
+ people better understand the likely and possible effects of the change.
+\end_layout
+
+\begin_layout Subsubsection*
+Decision making
+\end_layout
+
+\begin_layout Quote
+
+\emph on
+By expecting a few developers to make controversial decisions you are breaking
+ the expectations, as well as making life dangerous for those developers.
+ I'll jump ship before being forced to merge an even remotely controversial
+ hardfork.
+
+\emph default
+ —
+\begin_inset space ~
+\end_inset
+
+Wladimir J.
+ van der Laan, Bitcoin Core Maintainer
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wumpus-2015-consensus"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bitcoin is expected to survive in a hostile environment – the proof of work
+ mechanism is designed to operate even if up to 
+\begin_inset Formula $50\%$
+\end_inset
+
+ of hashpower is dishonest, for instance.
+ In contrast, a requirement for unanimous consent is not compatible with
+ a hostile environment: an attacker can indefinitely prevent improvements
+ simply by feigning opposition.
+\end_layout
+
+\begin_layout Standard
+A variety of responses to this are available.
+ The simplest is to simply accept it, and consider stability of consensus
+ rules an advantage of Bitcoin compared to other systems, which some do
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "extreme-consensus"
+
+\end_inset
+
+.
+ Another approach is to distinguish an acceptable level of mild opposition
+ from substantial opposition that should block a proposal from going ahead.
+ This approach is perhaps best known as the IETF's 
+\begin_inset Quotes eld
+\end_inset
+
+rough consensus
+\begin_inset Quotes erd
+\end_inset
+
+ approach 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "btcdev-rough-consensus"
+
+\end_inset
+
+.
+ The final alternative is to go ahead with a proposed change despite acknowledgi
+ng the existence of (substantial) opposition.
+\end_layout
+
+\begin_layout Standard
+In any event decisions need to be made: at a minimum which of these approaches
+ is to be adopted, and potentially how to evaluate whether opposition is
+ significant or not, and when to proceed despite significant opposition.
+\end_layout
+
+\begin_layout Standard
+As such, it seems likely that both the power and responsibility for making
+ these judgements should ideally devolve to the Bitcoin economy, rather
+ than developers, miners or nodes:
+\end_layout
+
+\begin_layout Itemize
+Developers are generally contributing either for philosophical reasons and
+ a desire to empower the users of their software; or more mundanely because
+ economic actors are paying them.
+ Giving decision making power to the broader community is in line with both
+ these motivations: it empowers users aligning with the philosophic motivation,
+ and gives decision making power to the employer when a contractual relationship
+ is in place.
+\end_layout
+
+\begin_layout Itemize
+Miners generally have high operating costs, which need to be paid by selling
+ mined coins to the economy, producing a vendor/customer relationship; giving
+ decision making power to the economy is thus both aligned with the philosophy
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+listening to your customers
+\begin_inset Quotes erd
+\end_inset
+
+ and reduces business risk, given that the economy will make the decision
+ anyway when valuing the coins they purchase, knowing the outcome of the
+ decision before incurring mining expenses is likely advantageous.
+\end_layout
+
+\begin_layout Itemize
+Nodes are easy to deploy, so in the event of any disagreement between the
+ economy and those currently running nodes, the economy will simply deploy
+ new nodes.
+\end_layout
+
+\begin_layout Standard
+This does not mean that developers, miners or nodes should have no influence
+ in changes to the Bitcoin consensus mechanism.
+ In contrast, these roles are naturally empowered to have an appropriate
+ degree of impact on proposed changes prior to changes being activated:
+\end_layout
+
+\begin_layout Itemize
+Developers have the choice of whether to implement a proposed change in
+ the software they maintain or to which they contribute.
+\end_layout
+
+\begin_layout Itemize
+Miners have the ability to signal support for the changed rules or not,
+ in a manner that is easy to observe, somewhat anonymous, and also resistant
+ to vote-stuffing
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Note that miners might not have the choice whether to deploy software running
+ the proposed change or not: if the economy disagrees with their choice,
+ they may not be able to afford continuing to mine if they choose wrong,
+ and if they're investment in mining equipment was financed by debt, they
+ may not even be able to choose to stop mining.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Nodes have the choice whether to upgrade their software and enforce the
+ changed rules or not.
+\end_layout
+
+\begin_layout Standard
+At best, each of these methods is only suitable for surveying the support
+ of a relatively small number of people: scaling development of the Bitcoin
+ Core node software to tens of thousands is likely to be impossible (for
+ comparison, the Linux kernel had 4,319 developers contributing patches
+ over a 14 month period 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "linux-lf-kernel-report-2017"
+
+\end_inset
+
+), let alone millions or billions of Bitcoin users; even with perfect decentrali
+sation of hashpower, mining can only directly provide one vote per block,
+ or about 1000 distinct votes per week; and, finally, because they are easy
+ to fire up, signalling by nodes is only suggestive at best, and not a reliable
+ indicator.
+\end_layout
+
+\begin_layout Subsubsection*
+Practicalities of decision making
+\end_layout
+
+\begin_layout Standard
+Ultimately the Bitcoin economy (as distinct from Bitcoin developers, miners
+ or nodes) has one primary power: to determine the value of Bitcoin tokens
+ in terms of other goods and currencies.
+\end_layout
+
+\begin_layout Standard
+This can, of course, be leveraged to effectively decide amongst competing
+ consensus mechanisms: setting the value of a set of tokens to zero effectively
+ terminates the corresponding consensus mechanism, by reducing the real
+ income of mining the chain to zero and thus making the proof of work mechanism
+ unprofitable.
+\end_layout
+
+\begin_layout Standard
+In order to exercise this power, however, a marketplace is required.
+ And to be fully accessible to the entire Bitcoin economy, that marketplace
+ should share many of the properties of the Bitcoin: ideally it should be
+ online, publicly accessible, pseudonymous, trustless and decentralised.
+\end_layout
+
+\begin_layout Standard
+One way to establish a marketplace satisfying those conditions for a potential
+ change in the consensus mechanism is simply to allow a chain split to take
+ place – the value assigned to each chain's tokens can then be used to calculate
+ respective market caps for both chains, which can in turn be used to estimate
+ the overall value created (or destroyed) due to the chain split.
+\end_layout
+
+\begin_layout Standard
+Alternatively, simpler marketplaces can be created in the hopes that the
+ resulting valuation will be close to what the entire economy would produce,
+ due to arbitrage and rational expectations.
+\end_layout
+
+\begin_layout Section
+Valuing consensus changes
+\end_layout
+
+\begin_layout Standard
+When a single change to the consensus mechanism is proposed, there are three
+ conceivable outcomes: nobody adopts the changed mechanism, everybody adopts
+ the changed mechanism, or a chain split occurs, and both mechanisms are
+ actively used.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathcal{N}}
+{\mathcal{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathcal{E}}
+{\mathcal{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\S}{\mathcal{S}}
+{\mathcal{S}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For ease of reference we will call these cases 
+\begin_inset Formula $\N$
+\end_inset
+
+, 
+\begin_inset Formula $\E$
+\end_inset
+
+, and 
+\begin_inset Formula $\S$
+\end_inset
+
+ respectively.
+ In each case, the economy will eventually choose a value for the coins
+ in each surviving chain; taking 
+\begin_inset Formula $a_{X}$
+\end_inset
+
+ to represent the value of the coin conforming to the original consensus
+ mechanism in case 
+\begin_inset Formula $X$
+\end_inset
+
+, and 
+\begin_inset Formula $b_{X}$
+\end_inset
+
+ correspondingly to be the value of the coin with the changed consensus
+ mechanism, then we can denote the values chosen in each scenario will be
+ 
+\begin_inset Formula $a=a_{\N}$
+\end_inset
+
+, 
+\begin_inset Formula $b=b_{\E}$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha=a_{\S}$
+\end_inset
+
+, 
+\begin_inset Formula $\beta=b_{\S}$
+\end_inset
+
+, with 
+\begin_inset Formula $a_{\E}=b_{\N}=0$
+\end_inset
+
+.
+ These values should be considered to be in real terms or in a common currency
+ at some particular time, and the are the values of each individual unit
+ coin, rather than the total market capitalisation of the coin.
+\end_layout
+
+\begin_layout Standard
+The expected behaviour for most potential changes to the consensus mechanism
+ is that any individual's balance will not change, in which case the total
+ value of any given holding of the currency simply changes in proportion
+ to the change in value.
+ Some proposed changes may, however, include rules providing an issuance
+ to particular users (such as Bitcoin Gold's pre-mine 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bittrex-bitgold"
+
+\end_inset
+
+), in which case those users will have a greater overall valuation of the
+ changed consensus mechanism than others.
+\end_layout
+
+\begin_layout Subsection
+Lack of price discovery for chain splits
+\end_layout
+
+\begin_layout Standard
+Note that an implicit assumption in the model above is that there is a single
+ common value for coins.
+ If there is not a suitable futures market, however, this may not be the
+ case – different members of the economy will have different valuations,
+ and until the tokens (or representative derivates) are able to be traded,
+ there may be nothing to force those valuations to converge.
+\end_layout
+
+\begin_layout Standard
+For instance, suppose that two groups have divergent valuations for coins
+ on the unchanged consensus rules (
+\begin_inset Formula $a_{\S,1}=\alpha_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{\S,2}=\alpha_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha_{1}>\alpha_{2}$
+\end_inset
+
+) and the changed consensus rules (
+\begin_inset Formula $b_{\S,1}=\beta_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $b_{\S,2}=\beta_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{1}<\beta_{2}$
+\end_inset
+
+), and that a split is certain to occur.
+ Prior to the split, we can expect the price of the combined token to match
+ the combined valuations, ie 
+\begin_inset Formula 
+\begin{align*}
+c & =\alpha_{1}+\beta_{1}\\
+ & =\alpha_{2}+\beta_{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+as if 
+\begin_inset Formula $c$
+\end_inset
+
+ were larger, people in one group or the other holding the currency would
+ sell, and if 
+\begin_inset Formula $c$
+\end_inset
+
+ were smaller, people in one group or the other would buy.
+ After the split occurs, the coins will be sold to the group that values
+ them most, so coins following the original consensus mechanism will be
+ sold to the first group, with the price of those tokens reaching that group's
+ valuation, 
+\begin_inset Formula $\alpha_{1}$
+\end_inset
+
+, and likewise coins following the modified consensus mechanism will be
+ sold to the second group, reaching valuation 
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+.
+ So the post split valuation will be
+\begin_inset Formula 
+\[
+c^{\prime}=\alpha_{1}+\beta_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+but 
+\begin_inset Formula $\beta_{2}>\beta_{1}$
+\end_inset
+
+ so
+\begin_inset Formula 
+\[
+c^{\prime}>c
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That is, in this scenario a chain split due to divergent values results
+ in an immediate price increase.
+\end_layout
+
+\begin_layout Standard
+This provides an explanation for the day one pricing in the Bitcoin Cash
+ split 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "coinmarketcap-btc,coinmarketcap-bch"
+
+\end_inset
+
+, which on 1st August 2017, gave prices of:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c=2918.27$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BTC at 05:34:55 UTC
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{1}=2712.76$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BTC at 23:34:39 UTC
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta_{2}=370.44$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BCH at 23:35:02 UTC
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Calculating, we can see:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+c^{\prime} & = & \alpha_{1}+\beta_{2} & = & 3083.20 & >c\\
+\beta_{1} & = & c-\alpha_{1} & = & 205.51 & <\beta_{2}\\
+\alpha_{2} & = & c-\beta_{2} & = & 2547.83 & <\alpha_{1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For interest's sake, we can compare the estimates for the pre-split valuations
+ to the post-split prices:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\nicefrac{\alpha_{2}}{\alpha_{1}} & \approx93.9\%\\
+\nicefrac{\beta_{1}}{\beta_{2}} & \approx55.5\%\\
+\nicefrac{c}{c^{\prime}} & \approx94.7\%
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that this is a simplistic analysis: it assumes each group has arbitrarily
+ large demand for their preferred coin at a particular valuation.
+ Introducing a demand curve for both groups would be likely be necessary
+ for predictive analysis, rather than just providing a post-hoc explanation.
+\end_layout
+
+\begin_layout Standard
+The key assumption here, however, is that each group is not able to accurately
+ predict the price at which they will be able to sell coins on their disfavoured
+ consensus mechanism to the other group.
+ If they were confident the post split valuations would be 
+\begin_inset Formula $\alpha_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+ respectively, then both groups could value pre-split coins at 
+\begin_inset Formula $c^{\prime}=\alpha_{1}+\beta_{2}$
+\end_inset
+
+ – the sum of value of the token they wish to keep at their personal valuation,
+ and the token they will sell to others at its market price.
+\end_layout
+
+\begin_layout Subsection
+Evaluating a chain split
+\end_layout
+
+\begin_layout Standard
+If we do have price discovery, so that there is a common market valuation
+ for 
+\begin_inset Formula $a$
+\end_inset
+
+, 
+\begin_inset Formula $b$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, and 
+\begin_inset Formula $\beta$
+\end_inset
+
+, then the current expected value under the current consensus rules can
+ be calculated as
+\begin_inset Formula 
+\[
+c=p_{\N}\cdot a+p_{\E}\cdot b+p_{\S}\cdot\left(\alpha+\beta\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $p_{X}$
+\end_inset
+
+ is the probability of case 
+\begin_inset Formula $X$
+\end_inset
+
+ occurring.
+ Since we are assuming these are the only three possibilities, 
+\begin_inset Formula $p_{\S}=1-p_{\N}-p_{\E}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It may be reasonable to simplify this formula in some cases.
+ In particular if we have full price discovery and there is a significant
+ difference between the prices for 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ then we can expect that it is unlikely that there will be unanimity in
+ choosing to only use the less valuable consensus mechanism (so if 
+\begin_inset Formula $a>b$
+\end_inset
+
+, 
+\begin_inset Formula $p_{\E}\approx0$
+\end_inset
+
+, and if 
+\begin_inset Formula $b>a$
+\end_inset
+
+, 
+\begin_inset Formula $p_{N}\approx0)$
+\end_inset
+
+.
+ We will define values:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a^{\prime},\alpha^{\prime},\beta^{\prime}=\begin{cases}
+a,\alpha,\beta & \text{when \ensuremath{a>b}}\\
+b,\beta,\alpha & \text{when \ensuremath{a<b}}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In most cases, we can further expect 
+\begin_inset Formula $\alpha^{\prime}>\beta^{\prime}$
+\end_inset
+
+ as the same considerations that caused the difference in 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ are likely to be reflected in 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ Likewise we can expect 
+\begin_inset Formula $\alpha^{\prime}+\beta^{\prime}>a^{\prime}$
+\end_inset
+
+, as otherwise it is unlikely that the split would be considered.
+ Finally, we expect 
+\begin_inset Formula $\alpha^{\prime}<a^{\prime}$
+\end_inset
+
+ as we would expect the competition (and potentially confusion) due to a
+ split coin to decrease value.
+\end_layout
+
+\begin_layout Standard
+This gives us:
+\begin_inset Formula 
+\[
+c\approx\left(1-p_{\S}\right)\cdot a^{\prime}+p_{\S}\cdot\left(\alpha^{\prime}+\beta^{\prime}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Setting 
+\begin_inset Formula $\tau=\nicefrac{a^{\prime}}{\alpha^{\prime}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=\nicefrac{\beta^{\prime}}{\alpha^{\prime}}$
+\end_inset
+
+ this simplifies to:
+\begin_inset Formula 
+\[
+c\approx\alpha^{\prime}\left(\tau+p_{\S}\left(1+\sigma-\tau\right)\right)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\alpha^{\prime}=\frac{c}{\tau+p_{\S}\left(1+\sigma-\tau\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that we expect 
+\begin_inset Formula $1+\sigma>\tau>1>\sigma$
+\end_inset
+
+ because we had 
+\begin_inset Formula $\alpha^{\prime}+\beta^{\prime}>a^{\prime}>\alpha^{\prime}>\beta^{\prime}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Given capital 
+\begin_inset Formula $K$
+\end_inset
+
+ expressed in a count of coins, we can compare net worth in the more likely
+ outcomes as 
+\begin_inset Formula $K\cdot a^{\prime}$
+\end_inset
+
+ if only one chain survives or as 
+\begin_inset Formula $K\cdot\alpha^{\prime}+K\cdot\beta^{\prime}$
+\end_inset
+
+ if a split occurs.
+ The profit of splitting is then:
+\begin_inset Formula 
+\[
+K\cdot\left(\alpha^{\prime}+\beta^{\prime}-a^{\prime}\right)=K\cdot\alpha^{\prime}\cdot\left(1+\sigma-\tau\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and a split is thus only profitable when this value is greater than the
+ costs of splitting, 
+\begin_inset Formula $C$
+\end_inset
+
+, ie
+\begin_inset Formula 
+\begin{align*}
+K\cdot\alpha^{\prime}\cdot\left(1+\sigma-\tau\right) & >C
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+or
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{C}{\alpha^{\prime}}<K\cdot\left(1+\sigma-\tau\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Further, because we expect 
+\begin_inset Formula $\tau>1$
+\end_inset
+
+, a necessary condition is therefore:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+K>\frac{C}{\alpha^{\prime}}\cdot\sigma^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This gives an requirement for pre-split capital holdings in Bitcoin (
+\begin_inset Formula $K$
+\end_inset
+
+) needed to justify the costs of a chain split in terms of number of Bitcoin's
+ on the more valuable post-split chain (
+\begin_inset Formula $\nicefrac{C}{\alpha^{\prime}}$
+\end_inset
+
+) and the comparative price of the two split coins (
+\begin_inset Formula $\sigma$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Market pricing
+\end_layout
+
+\begin_layout Standard
+Note that depending on the terms and conditions, market prices may not directly
+ give values for 
+\begin_inset Formula $a$
+\end_inset
+
+, 
+\begin_inset Formula $b$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ in the way we have used them above.
+\end_layout
+
+\begin_layout Standard
+If we consider a model of traders exchanging promises of 
+\begin_inset Formula $q_{a}$
+\end_inset
+
+ coins according to the original consensus mechanism for 
+\begin_inset Formula $q_{b}$
+\end_inset
+
+ coins according to the proposed consensus mechanism a variety of markets
+ remain possible in practice.
+ We will use the ratio 
+\begin_inset Formula $r=\nicefrac{q_{a}}{q_{b}}$
+\end_inset
+
+ to talk about the prices discovered by these markets – a higher ratio 
+\begin_inset Formula $r$
+\end_inset
+
+ indicates a higher price for coins following the modified rule set compared
+ to coins following the original rule set.
+ Note that at equilibrium, the value of the tokens will correspond to the
+ quantities required for exchange, so that 
+\begin_inset Formula $c_{a}\cdot q_{a}=c_{b}\cdot q_{b}$
+\end_inset
+
+, and hence 
+\begin_inset Formula $r=\nicefrac{c_{b}}{c_{a}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One approach (which we will denote as 
+\begin_inset Formula $U$
+\end_inset
+
+), adopted by Bitfinex 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bitfinex-chainsplittokens,bitfinex-segwit2xtokens"
+
+\end_inset
+
+ is to have the tokens unconditionally aligned with each particular consensus
+ mechanism, so that if no split occurs one set of tokens or the other will
+ be worthless.
+ In this case the expected value of each token is 
+\begin_inset Formula $c_{a}=p_{\N}\cdot a+p_{\S}\cdot\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{b}=p_{\E}\cdot b+p_{\S}\cdot\beta$
+\end_inset
+
+, and 
+\begin_inset Formula $c=c_{a}+c_{b}$
+\end_inset
+
+.
+ From this we can calculate:
+\begin_inset Formula 
+\begin{align*}
+p_{\N}\cdot a+p_{\S}\cdot\alpha & =\frac{c}{1+r_{U}}\\
+p_{\E}\cdot b+p_{\S}\cdot\beta & =\frac{c\cdot r_{U}}{1+r_{U}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Another approach is to provide a trade that is only valid when a chain split
+ occurs, with full refund to both parties if there is no split.
+ This may be specified as the trade only taking place when there is a split
+ (which we will call case 
+\begin_inset Formula $S$
+\end_inset
+
+), or taking place as long as the consensus mechanism activates with a refund
+ occurring only in case 
+\begin_inset Formula $\N$
+\end_inset
+
+ (we will call this case 
+\begin_inset Formula $A$
+\end_inset
+
+, eg 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lee-ver-segwit2x-trade"
+
+\end_inset
+
+).
+ In case 
+\begin_inset Formula $S$
+\end_inset
+
+, the value of the trade is 
+\begin_inset Formula $v_{S}=p_{\S}\left(\alpha\cdot q_{a}-\beta\cdot q_{b}\right)$
+\end_inset
+
+ which is 
+\begin_inset Formula $0$
+\end_inset
+
+ at equilibrium, giving 
+\begin_inset Formula $\alpha\cdot q_{a}=\beta\cdot q_{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nicefrac{\beta}{\alpha}=\nicefrac{q_{a}}{q_{b}}=r_{S}$
+\end_inset
+
+.
+ In case 
+\begin_inset Formula $A$
+\end_inset
+
+, the value of the trade is 
+\begin_inset Formula $v_{A}=-p_{\E}\cdot b\cdot q_{b}+p_{\S}\left(\alpha\cdot q_{a}-\beta\cdot q_{b}\right)$
+\end_inset
+
+ which is again 
+\begin_inset Formula $0$
+\end_inset
+
+ at equilibrium, giving:
+\begin_inset Formula 
+\begin{align*}
+\left(p_{\E}\cdot b+p_{\S}\cdot\beta\right)\cdot q_{b} & =p_{\S}\cdot\alpha\cdot q_{a}\\
+r_{A}=\nicefrac{q_{a}}{q_{b}} & =\frac{p_{\E}\cdot b+p_{\S}\cdot\beta}{p_{\S}\cdot\alpha}\\
+p_{\S}\cdot\alpha & =\frac{p_{\E}\cdot b+p_{\S}\cdot\beta}{r_{A}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can combine these different ratios to calculate individual terms of 
+\begin_inset Formula $c=p_{\N}\cdot a+p_{\E}\cdot b+p_{\S}\left(\alpha+\beta\right)$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+p_{\S}\cdot\alpha & =\frac{c}{r_{A}\cdot\left(1+r_{U}\right)}\cdot r_{U}\\
+p_{\S}\cdot\beta & =\frac{c}{r_{A}\cdot\left(1+r_{U}\right)}\cdot r_{U}\cdot r_{S}\\
+p_{\N}\cdot a & =\frac{c}{r_{A}\cdot\left(1+r_{U}\right)}\cdot\left(r_{A}-r_{U}\right)\\
+p_{\E}\cdot b & =\frac{c}{r_{A}\cdot\left(1+r_{U}\right)}\cdot r_{U}\cdot\left(r_{A}-r_{S}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because the calculations only require comparative trades – the promise of
+ one quantity of coins exchanged for another under various conditions –
+ they theoretically can be done in a cryptographically secure manner, potentiall
+y reducing reliance on exchange rates, trusted parties, regulations, and
+ the legal system in general.
+\end_layout
+
+\begin_layout Standard
+We can draw some useful conclusions from these values however:
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $r_{U}\approx0$
+\end_inset
+
+ then we immediately calculate that each of 
+\begin_inset Formula $p_{\S}\alpha\approx p_{\S}\beta\approx p_{\E}b\approx0$
+\end_inset
+
+, from which we can infer, (a) that a split is unlikely (
+\begin_inset Formula $p_{\S}\approx0$
+\end_inset
+
+) or that the value of the coin will be near zero on both sides of the split,
+ which in turn means a split is unlikely; and (b) that everyone switching
+ to the changed rules is unlikely (
+\begin_inset Formula $p_{\E}\approx0$
+\end_inset
+
+) or that if everyone switches, the value of coins in the chain will be
+ minimal, which in turn means that everyone switching is unlikely.
+ Combined, this implies near certainty that everyone will stay on the original
+ rules, ie that 
+\begin_inset Formula $p_{\N}\approx1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+If it is unlikely that everyone will adopt the proposed changes (ie, 
+\begin_inset Formula $p_{\E}\approx0$
+\end_inset
+
+), but not certain that no one will adopt the proposed changes (ie 
+\begin_inset Formula $p_{\N}<1$
+\end_inset
+
+) the market will indicate this with 
+\begin_inset Formula $r_{A}\approx r_{S}$
+\end_inset
+
+.
+ Provided 
+\begin_inset Formula $r_{S}<1$
+\end_inset
+
+, then we can use the simplification in the previous section with 
+\begin_inset Formula $\alpha^{\prime}=\alpha$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma=r_{S}$
+\end_inset
+
+, 
+\begin_inset Formula $\tau=\nicefrac{a}{\alpha}=\left(\nicefrac{r_{S}}{r_{U}}-1\right)\cdot\left(\nicefrac{1}{1-p_{\S}}-1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+If it is unlikely that no one will adopt the proposed changes (ie, 
+\begin_inset Formula $p_{\N}\approx0$
+\end_inset
+
+), the market will indicated this with 
+\begin_inset Formula $r_{A}\approx r_{U}$
+\end_inset
+
+.
+ Provided 
+\begin_inset Formula $r_{\S}>1$
+\end_inset
+
+, we can use the simplication in the previous section with 
+\begin_inset Formula $\alpha^{\prime}=\beta$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma=r_{S}^{-1}$
+\end_inset
+
+, 
+\begin_inset Formula $\tau=\nicefrac{b}{\beta}=\left(\nicefrac{r_{U}}{r_{S}}-1\right)\cdot\left(\nicefrac{1}{1-p_{\S}}-1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Unfortunately these are all conditional valuations – for instance the value
+ 
+\begin_inset Formula $p_{\E}\cdot b$
+\end_inset
+
+ may be low either because the chance of it occurring are low, or because
+ the proposed change would cause a large decrease in the value of the chain.
+ A prediction market working in US dollars 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+It is necessary to do the pricing in terms of an uncorrelated asset, ideally
+ one that provides a stable store of value.
+ Because cryptocurrencies currently tend to be highly correlated, it is
+ unlikely to be possible to do this in a trustless, decentralised manner
+ in the near future.
+ For instance, if a contract priced in a currency 
+\begin_inset Formula $X$
+\end_inset
+
+ whose valuation in real terms is correlated with bitcoin (eg, 
+\begin_inset Formula $X=x\cdot B$
+\end_inset
+
+) then a contract in that currency that pays out 1 unit if a split occurs
+ has present value 
+\begin_inset Formula $p_{S}\left(x\cdot B\right)=p_{s}\left(\alpha+\beta\right)\cdot x$
+\end_inset
+
+ and does not help distinguish probabilities from valuation.
+ In contrast, a contract that pays $1 if a split occurs and $0 otherwise
+ has a present value of 
+\begin_inset Formula $p_{\S}$
+\end_inset
+
+ and can meaningfully distinguish valuations from probability.
+ (For long term predictions, adjustments for inflation may be needed, of
+ course)
+\end_layout
+
+\end_inset
+
+ on the question of adoption of the proposed change to the consensus mechanism
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "truthcoin-fork-futures"
+
+\end_inset
+
+ would be one way of separating out these values (that is to deduce 
+\begin_inset Formula $p_{\N},p_{\E},p_{\S}$
+\end_inset
+
+ or 
+\begin_inset Formula $a,b,\alpha,\beta$
+\end_inset
+
+) .
+\end_layout
+
+\begin_layout Section
+Costs of consensus changes
+\end_layout
+
+\begin_layout Standard
+Changing consensus rules can increase the network's costs in two ways:
+\end_layout
+
+\begin_layout Description
+Fundamental
+\begin_inset space ~
+\end_inset
+
+costs are due to the work that needs to be carried out to provide proof
+ of work according to the consensus mechanism.
+ The proof of work costs are fundamental in the sense that if they are paid,
+ then the chain will continue, and if they are not, then a chain split cannot
+ occur.
+ For instance, in the case of a chain split where the proof of work mechanism
+ is not changed, these costs will initially double.
+ If the proof of work mechanism is changed significantly, they may include
+ the costs to deploy hardware supporting the new mechanism.
+\end_layout
+
+\begin_layout Description
+Externalities will also arise due to the additional work that needs to be
+ done by node maintainers, wallets, merchants, exchanges, and so forth to
+ cope with managing the new rules, and potentially differentiating between
+ two ledgers in the case of a chain split.
+\end_layout
+
+\begin_layout Standard
+Fundamental costs will certainly have an impact on whether a change to consensus
+ rules are adopted, as they impact adoption directly.
+ Externalities will likely impact the decision to adopt new consensus rules
+ only indirectly via the impact on expected value of coins under the changed
+ mechanism.
+\end_layout
+
+\begin_layout Standard
+Note that a chain split is something of a 
+\begin_inset Quotes eld
+\end_inset
+
+worst best case
+\begin_inset Quotes erd
+\end_inset
+
+ for determining a valuation.
+ It is a best case scenario in that it provides a fully functional marketplace
+ for the Bitcoin economy to determine the value of a proposed change to
+ the consensus mechanism in the long term with no uncertainty.
+ But of the ways of achieving that result, it is usually one of the worst
+ in terms of both fundamental costs and externalities – if a change is a
+ good thing, it would have been better to simply adopt it directly; and
+ if a change is a bad thing, it would be better to have kept with the original
+ rules.
+\end_layout
+
+\begin_layout Subsection
+Fundamental Costs
+\end_layout
+
+\begin_layout Standard
+If a consensus change does not alter the proof of work mechanism, then unless
+ a chain split occurs, there is no change to the fundamental costs.
+ However, in the event of a chain split fundamental costs do change, even
+ absent any change to the proof of work mechanism.
+\end_layout
+
+\begin_layout Standard
+To analyse this, we will make the following assumptions:
+\end_layout
+
+\begin_layout Enumerate
+The changed consensus rules do not alter the proof of work mechanism.
+\end_layout
+
+\begin_layout Enumerate
+The cost of performing proof of work calculations does not change over the
+ course of the split (eg, there is no major change in electricity costs,
+ and no new generation of mining hardware is introduced).
+\end_layout
+
+\begin_layout Enumerate
+The market has fully priced in the effect of the split, so that 
+\begin_inset Formula $c=\alpha+\beta$
+\end_inset
+
+.
+ We will set 
+\begin_inset Formula $\alpha^{\prime}=\nicefrac{\max(\alpha,\beta)}{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta^{\prime}=\nicefrac{\min(\alpha,\beta)}{c}$
+\end_inset
+
+, noting that that 
+\begin_inset Formula $\alpha^{\prime}+\beta^{\prime}=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The post-split price ratio is stable over the medium term, that is 
+\begin_inset Formula $\sigma=\nicefrac{\beta^{\prime}}{\alpha^{\prime}}$
+\end_inset
+
+ (the price of the lower value token in terms of the higher value token)
+ is constant.
+\end_layout
+
+\begin_layout Enumerate
+The fork takes place on a retarget boundary, so that the next retarget occurs
+ in 2016 blocks.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Initial difficulty 
+\begin_inset Formula $d$
+\end_inset
+
+ is targeted appropriately so that the network's total hashpower, 
+\begin_inset Formula $h$
+\end_inset
+
+, is expected to find 2016 blocks in 14 days.
+\end_layout
+
+\begin_layout Enumerate
+The block reward on both chains is constant (currently 12.5 coins).
+\end_layout
+
+\begin_layout Standard
+If miners were to optimise for short-term revenue, then a degenerate scenario
+ would arise: mining the two chains would have expected return proportional
+ to 
+\begin_inset Formula $\nicefrac{\alpha^{\prime}}{d}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nicefrac{\beta^{\prime}}{d}$
+\end_inset
+
+ respectively, and each miner would make the same decision to mine the chain
+ corresponding to 
+\begin_inset Formula $\alpha^{\prime}$
+\end_inset
+
+ and the other chain would not be viable.
+\end_layout
+
+\begin_layout Standard
+A reasonably straightforward way to avoid this scenario and maintain a chain
+ split is to subsidise mining on the less profitable chain until the expected
+ return on both chains equalise.
+ This could perhaps be achieved by some miners deliberately not maximising
+ revenue, by users paying higher transaction fees, or by direct payments
+ to miners from those invested in the split succeeding.
+ Care would need to be taken to ensure that the subsidy does not cause all
+ miners to mine the lower valued chain, resulting in the same degenerate
+ scenario, of course.
+\end_layout
+
+\begin_layout Standard
+A simple target for subsidising mining would be to ensure each chain maintains
+ a fixed average hashrate in constant proportion to its value, and relying
+ on the retargetting algorithm to eventually ensure difficulty aligns as
+ well.
+\end_layout
+
+\begin_layout Standard
+The approach that minimises the time over which mining needs to be subsidised
+ is to determine the minimum number of retargetting periods necessary to
+ align the difficulty with the chain valuations (namely, 
+\begin_inset Formula $p=\left\lceil -\log_{4}(\beta^{\prime})\right\rceil $
+\end_inset
+
+), and equalise the adjustment on the lower valued chain in each period,
+ such that the hashrate in period 
+\begin_inset Formula $i$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu^{i}\cdot h$
+\end_inset
+
+ with the hashrate in the final period being 
+\begin_inset Formula $\mu^{p}\cdot h=\beta^{\prime}\cdot h$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu=\beta^{\prime\nicefrac{1}{p}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+While the fixed hashrate approach is simple, when 
+\begin_inset Formula $\sigma=\nicefrac{\beta^{\prime}}{\alpha^{\prime}}$
+\end_inset
+
+ is small, it can take a very long time before equilibrium is reached and
+ subsidising hashrate is no longer necessary, as can be seen in Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Time-until-difficulty"
+
+\end_inset
+
+.
+ By contrast, optimising to reach equilbrium quickly is likely to perform
+ much better, with only a moderate increase in the amount of subsidy required,
+ as shown in Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsidy-Required"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename lifetime.pdf
+	width 2.5in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Time until difficulty reaches equilibrium
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Time-until-difficulty"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename costs.pdf
+	width 2.5in
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Subsidy level required
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsidy-Required"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the counterfactual where no split occurred is considered, and the value
+ of each coin in that circumstance is assumed to be somewhere between 
+\begin_inset Formula $c\cdot\alpha^{\prime}$
+\end_inset
+
+ and 
+\begin_inset Formula $c$
+\end_inset
+
+, it is possible to calculate the difference between the value that would
+ have been obtained by dedicating all 
+\begin_inset Formula $h$
+\end_inset
+
+ hashpower to that chain, instead of mining the split chains, and the overall
+ loss to miners due to the split (see Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Foregone-reward"
+
+\end_inset
+
+).
+ When denominated in units of coins on the 
+\begin_inset Formula $\alpha^{\prime}$
+\end_inset
+
+ chain, this foregone value can be as much as 30,000-50,000 Bitcoin.
+ This is the worst case, of course: much more pleasant outcomes can occur
+ in limited situations, namely the counterfactual non-split coin would only
+ have had equivalent value to one of the split coin, ie the 
+\begin_inset Formula $c\cdot\alpha^{\prime}$
+\end_inset
+
+ case – making mining of the other chain a potentially large value add;
+ or when 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is very small, and thus the impact on hashrate and reward due to mining
+ the 
+\begin_inset Formula $\beta^{\prime}$
+\end_inset
+
+ chain is minimised.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename foregone.pdf
+	width 2.5in
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Foregone reward
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Foregone-reward"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename subgain.pdf
+	width 2.5in
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Total mining reward after subsidy
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mining-reward-after"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This gives one way to determine whether miners have any interest in attempting
+ to force or block a chain split: if a chain split is expected to result
+ in more overall reward to be shared amongst miners, it may be worth miners
+ subsidising the split themselves – Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Foregone-reward"
+
+\end_inset
+
+ shows this is generally not the case.
+ But if it has the effect of shrinking the overall pie, it may be that this
+ effect outweighs even payments from a third-party attempting to subsidise
+ miners during a split, and it would be better for miners to take the long
+ view and ignore any subsidies offered in the short-term.
+ We can combine the subsidy figure and forgone reward estimate (in Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mining-reward-after"
+
+\end_inset
+
+) to see that the situation here is in fact mixed: in some cases, particularly
+ for 
+\begin_inset Formula $\sigma<0.4$
+\end_inset
+
+, accepting a subsidy is likely reasonable, while for other cases, such
+ as 
+\begin_inset Formula $\sigma>0.6$
+\end_inset
+
+, even accepting the subsidy may result in overall losses to miners of 20,000
+ Bitcoin or more.
+\end_layout
+
+\begin_layout Standard
+Using the formula calculated earlier to estimate minimum capital requirements
+ to justify split costs, we can estimate the capital necessary to justify
+ supplying the subsidy we have calculated.
+ For 
+\begin_inset Formula $\sigma\ge0.2$
+\end_inset
+
+ this gives values up to about 175,000 Bitcoin; however due to the 
+\begin_inset Formula $\sigma^{-1}$
+\end_inset
+
+ term, this rapidly worsens as 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ descreases, approaching 900,000 Bitcoin at 
+\begin_inset Formula $\sigma=0.05$
+\end_inset
+
+, and Bitcoin's current market cap of ~17,000,000 Bitcoin at 
+\begin_inset Formula $\sigma=0.004$
+\end_inset
+
+.
+ Note these are necessary conditions, not sufficient, as they do not take
+ into account the value of 
+\begin_inset Formula $\tau$
+\end_inset
+
+, so in practice higher capital values will likely be needed to result in
+ a net positive outcome.
+\end_layout
+
+\begin_layout Subsection
+Externalities
+\end_layout
+
+\begin_layout Standard
+There are a wide range of externalities due to splitting the chain.
+ These include:
+\end_layout
+
+\begin_layout Itemize
+Separating the P2P networks, so that nodes tracking each chain can successfully
+ communicate with each other and establish consensus on the most-work valid
+ chain.
+\end_layout
+
+\begin_layout Itemize
+Duplicating (or sharing) the database of historical transactions.
+\end_layout
+
+\begin_layout Itemize
+Maintaining codebases for validating and mining both chains.
+\end_layout
+
+\begin_layout Itemize
+Adapting SPV, web and hardware wallets to support both chains.
+\end_layout
+
+\begin_layout Itemize
+Updating social conventions used to a single chain to deal with two chains
+ (or going from 
+\begin_inset Formula $n$
+\end_inset
+
+ to 
+\begin_inset Formula $n+1$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+Addressing wipeout risk (an initially unpopular soft-fork may wipeout the
+ original chain if it eventually gains more work; an initially popular hard-fork
+ may be wiped out by the original chain if it eventually gains more work).
+ This can be fairly easily addressed in a variety of ways, most trivially
+ by adding a checkpoint ("the block at height 
+\begin_inset Formula $h$
+\end_inset
+
+ must have hash 
+\begin_inset Formula $XXXX$
+\end_inset
+
+...").
+\end_layout
+
+\begin_layout Itemize
+Addressing cross-chain replay risk (spending historical coins on one chain
+ should not result in them being unintentionally spent on the chain on the
+ other side of the split)
+\end_layout
+
+\begin_layout Section
+Proposals
+\end_layout
+
+\begin_layout Subsection
+Block History Commitment in Signature
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\SH}[1]{{\tt SIGHASH\_#1}}
+{{\tt SIGHASH\_#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cross-chain replay risk can be almost eliminated by committing to the hash
+ of a historical block in a transaction signature.
+ This may be achieved by:
+\end_layout
+
+\begin_layout Itemize
+Updating the signature hashtype from using a single byte indicating 
+\begin_inset Formula $\SH{ALL}$
+\end_inset
+
+, 
+\family typewriter
+
+\begin_inset Formula $\SH{NONE}$
+\end_inset
+
+
+\family default
+, and 
+\begin_inset Formula $\SH{ANYONECANPAY}$
+\end_inset
+
+, to having an additional bit in the final byte, 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+ and two extra bytes interpreted as a value between 0 and 65535.
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+ is set, then:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the transaction's lock time must be set, and below 
+\family typewriter
+LOCKTIME_THRESHOLD
+\family default
+ (ie, interpreted as a block height)
+\end_layout
+
+\begin_layout Itemize
+this corresponding input's sequence number must not be 
+\family typewriter
+maxint
+\family default
+ (ensuring the lock time is applied)
+\end_layout
+
+\begin_layout Itemize
+the extra two bytes are extracted and called 
+\family typewriter
+
+\begin_inset Formula ${\tt nHashOffset}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula ${\tt nHashOffset}=0$
+\end_inset
+
+, then define 
+\begin_inset Formula ${\tt nBlockCommitHeight}=0$
+\end_inset
+
+; otherwise 
+\begin_inset Formula ${\tt nBlockCommitHeight}={\tt nLockTime}-{\tt nHashOffset}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the hash of the block at height 
+\begin_inset Formula ${\tt nBlockCommitHeight}$
+\end_inset
+
+ is found
+\end_layout
+
+\begin_layout Itemize
+when calculating the transaction digest for signature verification (BIP143),
+ the 10th step changes from "sighash type of the signature" to:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+hash of the block at 
+\begin_inset Formula ${\tt nBlockCommitHeight}$
+\end_inset
+
+ (32 bytes)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\tt nBlockCommitHeight}$
+\end_inset
+
+(4 bytes)
+\end_layout
+
+\begin_layout Itemize
+(original) sighash type of the signature (4 bytes)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Two further potential improvements to this approach could also be made.
+\end_layout
+
+\begin_layout Standard
+First, in order to reduce the chance of a transaction beoming invalid in
+ the event of a short reorganisation, a rule could be applied asserting
+ either that:
+\end_layout
+
+\begin_layout Itemize
+the transaction is invalid if 
+\begin_inset Formula $0<{\tt nHashOffset}<100$
+\end_inset
+
+, ensuring 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+ transactions will only be invalidated similarly to coinbase spends; or
+\end_layout
+
+\begin_layout Itemize
+the transaction is non-standard if 
+\begin_inset Formula ${\tt tip\,height}<{\tt nBockCommitHeight}+100$
+\end_inset
+
+, which has the advantage that the rule applies more consistently and can
+ be adjusted easily
+\end_layout
+
+\begin_layout Standard
+Second, in order to make it easier to validate new blocks by only requiring
+ a constant size lookup table rather than one that grows linearly with the
+ chain height:
+\end_layout
+
+\begin_layout Itemize
+allowing a further 32 bytes in the encoded signature; if present then the
+ final 35 bytes are made up of (in order):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the block hash at 
+\begin_inset Formula ${\tt nBlockCommitHeight}$
+\end_inset
+
+ (32 bytes)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\tt nHashOffset}$
+\end_inset
+
+ (2 bytes)
+\end_layout
+
+\begin_layout Itemize
+and the sighash type (1 byte)
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula ${\tt tip\,height}>{\tt nBlockCommitHeight}+27000$
+\end_inset
+
+ (six months worth of blocks) then the signature is non-standard if it does
+ not include the block hash
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula ${\tt tip\,height}>{\tt nBlockCommitHeight}+53000$
+\end_inset
+
+ (twelve months worth of blocks), then the tx is invalid if the signature
+ does not include the block hash
+\end_layout
+
+\begin_layout Itemize
+if the block hash is included in the signature and does not match the hash
+ of the block at 
+\begin_inset Formula ${\tt nBlockCommitHeight}$
+\end_inset
+
+, the signature is invalid
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+If deployed, this would allow both full nodes and light/SPV nodes to fairly
+ easily pick a particular chain in the event of a split and avoid both wipeout
+ and replay risk by simply by tracking the height at which contentious BIPs
+ are due to activate:
+\end_layout
+
+\begin_layout Enumerate
+Wipeout risk can be avoided by refusing to reorg above that height once
+ the chain is 100 blocks higher.
+\end_layout
+
+\begin_layout Enumerate
+Replay risk can be avoided by using 
+\begin_inset Formula ${\tt nLockTime}$
+\end_inset
+
+ and 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+to ensure the block at that height is in your transaction's history.
+\end_layout
+
+\begin_layout Enumerate
+A particular chain in the split can be chosen by verifying the characteristics
+ of the block at the split height, or more explicitly, the hash of the block
+ at the split height.
+\end_layout
+
+\begin_layout Standard
+Additionally, Lightning nodes with open channels could add the 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+ flag to signatures in their channel commitment transactions to split a
+ lightning channel into two, one for each side of a chain split.
+ This can be accomplished without an on-chain transaction, at least until
+ one of the channels needs to be closed.
+\end_layout
+
+\begin_layout Standard
+This proposal could be deployed either:
+\end_layout
+
+\begin_layout Enumerate
+as a hard-fork, applied directly to 
+\family typewriter
+OP_CHECKSIG
+\family default
+ etc
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Deployment via hard fork has the significant advantage that it allows spends
+ of any existing coin to be locked to a fork, without an intermediate transactio
+n to update to the new scheme.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+as a soft-fork, via a bumped witness version for segwit transaction
+\end_layout
+
+\begin_layout Enumerate
+as a soft-fork, via new opcodes (eg 
+\family typewriter
+OP_CHECKSIGVERIFY_2
+\family default
+, 
+\family typewriter
+OP_CHECKMULTISIGVERIFY_2
+\family default
+)
+\end_layout
+
+\begin_layout Standard
+Implementation details should be similar to that of BIP
+\begin_inset space ~
+\end_inset
+
+115 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bip-115"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Signature Commitment to Unactivated Features
+\end_layout
+
+\begin_layout Standard
+It seems that it should be possible to use a similar approach to commit
+ to the implementation status of a BIP.
+ In particular:
+\end_layout
+
+\begin_layout Itemize
+Updating the sighash type to include an additional bit 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+.
+ This bit is incompatible with 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ is set:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+An additional two bytes are added to the signature in the signature, as
+ per 
+\begin_inset Formula $\SH{BLOCKCOMMIT}$
+\end_inset
+
+.
+ Bits 0-15 are treated as an unsigned value between 0 and 32767, called
+ 
+\begin_inset Formula ${\tt nBIPCommit}$
+\end_inset
+
+; bit 16 is a bool, called 
+\begin_inset Formula ${\tt fBIPActive}$
+\end_inset
+
+ and treated as true if the bit is set.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+When calculating the transaction digest for signature verification (BIP143),
+ the 10th step changes from "sighash type of the signature" to:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula ${\tt fBIPActive}$
+\end_inset
+
+ (1 bit)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\tt nBIPCommit}$
+\end_inset
+
+ (15 bits)
+\end_layout
+
+\begin_layout Itemize
+(original) sighash type of the signature (4 bytes)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+When validating a signature in a block, the status of BIP number 
+\begin_inset Formula ${\tt nBIPCommit}$
+\end_inset
+
+ is checked; if the status does not match 
+\begin_inset Formula ${\tt fBIPActive}$
+\end_inset
+
+ the signature is invalid.
+\end_layout
+
+\begin_layout Standard
+Checking BIP status in a soft-fork compatible manner requires significant
+ care.
+ In particular, an implementation must be prepared to accept as active BIPs
+ that have not yet been written at the time the implementation is released.
+\end_layout
+
+\begin_layout Standard
+In order to achieve this, BIPs are classified as known and unknown.
+\end_layout
+
+\begin_layout Standard
+Known BIPs are categorised as active or inactive according to rules specified
+ in the BIP, with the following constraints on activation:
+\end_layout
+
+\begin_layout Itemize
+All BIPs are inactive as of the genesis block.
+\end_layout
+
+\begin_layout Itemize
+If a BIP is active in a block at height 
+\begin_inset Formula $h$
+\end_inset
+
+, the BIP is also active for any descendent of that block.
+\end_layout
+
+\begin_layout Itemize
+BIPs may not specify rules allowing activation within the first four months
+ (125 days) after they are published (per median block time).
+\end_layout
+
+\begin_layout Standard
+Unknown BIPs are tracked by an implementation as follows:
+\end_layout
+
+\begin_layout Itemize
+Unpublished BIPs are treated as having a reservation date matching the release
+ date of the implementation.
+\end_layout
+
+\begin_layout Itemize
+If a BIP has been published, and the implementation is able to follow the
+ chain once it activates (that is, the implementation treats the BIP as
+ a soft-fork), but the activation rules are not tracked, the BIP is treated
+ as having a reservation date of 100 days prior to its earliest possible
+ activation.
+\end_layout
+
+\begin_layout Itemize
+Unknown BIPs have three possible states as of a block: active, inactive
+ and unknown.
+ This state is set according to the following rules:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+All BIPs are inactive as of the genesis block.
+\end_layout
+
+\begin_layout Itemize
+If a block's median block time is less than 90 days after the BIP's reservation
+ date, the BIP is inactive.
+\end_layout
+
+\begin_layout Itemize
+If a BIP was active in a block's parent, it is active in the block.
+\end_layout
+
+\begin_layout Itemize
+Otherwise, when evaluating transactions in a block, the BIP's state is initially
+ unknown.
+ As the block is processed the state is updated as follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+if a transaction is seen with a signature specifying the BIP must be inactive;
+ then if the BIP's status is active, the block is invalid; otherwise the
+ BIP's status becomes/remains inactive;
+\end_layout
+
+\begin_layout Itemize
+if a transaction is seen with a signature specifying the BIP must be active;
+ then if the BIP's status is inactive, the block is invalid; otherwise the
+ BIP's status becomes/remains active.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+A transaction with a signature requiring an unknown BIP is non-standard.
+\end_layout
+
+\begin_layout Standard
+This allows new BIPs to be accepted by old validating nodes, even if they
+ were released prior to the BIP's creation, while still allowing those nodes
+ to validate consistency as much as possible.
+\end_layout
+
+\begin_layout Standard
+Further, miners are prevented from using the unknown BIP rules to allow
+ them to activate an unpublished BIP, as any nodes running implementations
+ released in the three months prior to the attempted activation will reject
+ the block.
+\end_layout
+
+\begin_layout Subsection
+Price Discovery via Commitment to Unactivated Features
+\end_layout
+
+\begin_layout Standard
+Transactions with signatures using 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ can then be used to establish a semi-decentralised market allowing market
+ price discovery in the following manner.
+ First, two parties prepare, but do not sign, a funding transaction paying
+ a 2-of-2 multisig address with 
+\begin_inset Formula $q_{A}+q_{B}$
+\end_inset
+
+ coins (
+\begin_inset Formula $q_{A}$
+\end_inset
+
+ from the first party, 
+\begin_inset Formula $q_{B}$
+\end_inset
+
+ from the second party).
+ Depending on the desired market structure, they then prepare transactions
+ that spend the funding transactions as follows:
+\end_layout
+
+\begin_layout Itemize
+case 
+\begin_inset Formula $U$
+\end_inset
+
+: The second party sends the first party a payment of all 
+\begin_inset Formula $q_{A}+q_{B}$
+\end_inset
+
+, signed with 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ set, with 
+\begin_inset Formula ${\tt fBIPActive={\tt true}}$
+\end_inset
+
+; and the first party sends the second party a payment of all 
+\begin_inset Formula $q_{A}+q_{B}$
+\end_inset
+
+ similarly signed with 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+set, but 
+\begin_inset Formula ${\tt fBIPActive}={\tt false}$
+\end_inset
+
+.
+ Once both transactions are received, both parties sign and publish the
+ original funding transaction.
+\end_layout
+
+\begin_layout Itemize
+case 
+\begin_inset Formula $S$
+\end_inset
+
+: Both parties agree on hash image 
+\begin_inset Formula $H(k)$
+\end_inset
+
+ whose preimage 
+\begin_inset Formula $k$
+\end_inset
+
+ will be revealed if (and only if) a chain split occurs.
+ Each party again sends the other payment a payment of all 
+\begin_inset Formula $q_{A}+q_{B}$
+\end_inset
+
+ signed with 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ and 
+\begin_inset Formula ${\tt fBIPActive}$
+\end_inset
+
+ set as per case 
+\begin_inset Formula $U$
+\end_inset
+
+, with the additional requirement that the preimage 
+\begin_inset Formula $k$
+\end_inset
+
+ is revealed.
+ Both parties then collaborate on a refund transaction that pays 
+\begin_inset Formula $q_{A}$
+\end_inset
+
+ to the first party, and 
+\begin_inset Formula $q_{B}$
+\end_inset
+
+ to the second party, timelocked to after the split is scheduled to occur,
+ with 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ unset.
+\end_layout
+
+\begin_layout Itemize
+case 
+\begin_inset Formula $A$
+\end_inset
+
+: Both parties agree on a hash image 
+\begin_inset Formula $H(k^{\prime})$
+\end_inset
+
+ whose preimage 
+\begin_inset Formula $k^{\prime}$
+\end_inset
+
+ will be revealed if (and only if) the BIP activates.
+ Each party again sends the other payment a payment of all 
+\begin_inset Formula $q_{A}+q_{B}$
+\end_inset
+
+ signed with 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ and 
+\begin_inset Formula ${\tt fBIPActive}$
+\end_inset
+
+ set as per case 
+\begin_inset Formula $U$
+\end_inset
+
+, with the requirement that the preimage 
+\begin_inset Formula $k^{\prime}$
+\end_inset
+
+ is revealed.
+ Both parties then collaborate on a refund transaction that pays 
+\begin_inset Formula $q_{A}$
+\end_inset
+
+ to the first party, and 
+\begin_inset Formula $q_{B}$
+\end_inset
+
+ to the second party, timelocked to after the split is scheduled to occur,
+ with 
+\begin_inset Formula $\SH{BIPCOMMIT}$
+\end_inset
+
+ unset.
+\end_layout
+
+\begin_layout Standard
+Note that because the setup involves sharing a 2-of-2 multisig address and
+ clearing requires revelation of a hash image, this methodology should be
+ compatible with lightning channels, which would allow for positions to
+ be rebalanced as time passes.
+\end_layout
+
+\begin_layout Standard
+The hash and preimage can conceivably be decided in a variety of ways:
+\end_layout
+
+\begin_layout Itemize
+The simplest approach is for a trusted third party to provide these values
+ as a public service.
+ It may, however, be difficult to ensure the third party will be independent
+ (eg, they may have a relationship with one of the parties to the transaction,
+ and be willing to collude), reliable (eg, they may lose the preimages prior
+ to the split occurring and be unable to publish them), and secure (eg,
+ the preimage may be discovered due to an attack or security vulnerability).
+\end_layout
+
+\begin_layout Itemize
+The most cypherpunk approach is to cyrptographically establish the existance
+ of a split or rule activation.
+ This is not possible with current Bitcoin script, but provided with script
+ opcodes able to detect proof of work compliance, resolve merkle trees,
+ and check arbitrary signatures, it would be feasible.
+\end_layout
+
+\begin_layout Itemize
+An alternative approach is to rely on economic incentives, requiring each
+ party to commit to an additional 
+\begin_inset Formula $r_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{B}$
+\end_inset
+
+ funds respectively:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+chain split (
+\begin_inset Formula $\S)$
+\end_inset
+
+: first party receives 
+\begin_inset Formula $(r_{A},q_{A}+q_{B}+r_{A})$
+\end_inset
+
+ on the respective chains, second party receives 
+\begin_inset Formula $(q_{A}+q_{B}+r_{B},r_{B})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+chain upgrade (
+\begin_inset Formula $\E$
+\end_inset
+
+): first party receives 
+\begin_inset Formula $(q_{A}+q_{B}+r_{A}+r_{B},q_{A}+r_{A})$
+\end_inset
+
+, second party receives 
+\begin_inset Formula $(0,q_{B}+r_{B})$
+\end_inset
+
+, chosen by the second party revealing preimage 
+\begin_inset Formula $k_{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+no change (
+\begin_inset Formula $\N$
+\end_inset
+
+): first party receives 
+\begin_inset Formula $(q_{A}+r_{A},0)$
+\end_inset
+
+, second party receives 
+\begin_inset Formula $(q_{B}+r_{B},q_{A}+q_{B}+r_{A}+r_{B})$
+\end_inset
+
+, chosen by the first party revealing preimage 
+\begin_inset Formula $k_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this case, if a chain upgrade occurs and the original chain is not mined,
+ the first party will not reveal preimage 
+\begin_inset Formula $k_{A}$
+\end_inset
+
+ (as they would lose all value), and the second party will reveal 
+\begin_inset Formula $k_{B}$
+\end_inset
+
+ in order to receive an additional 
+\begin_inset Formula $q_{B}$
+\end_inset
+
+ coins.
+ Likewise if no change occurs and the upgraded chain is not mined, the second
+ party will not reveal preimage 
+\begin_inset Formula $k_{B}$
+\end_inset
+
+ but the first party will reveal preimage 
+\begin_inset Formula $k_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the case of a chain split, the first party will decide whether to reveal
+ 
+\begin_inset Formula $k_{A}$
+\end_inset
+
+ based on the relative value of coins on each chain (
+\begin_inset Formula $c_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{B})$
+\end_inset
+
+, and will do so when
+\begin_inset Formula 
+\[
+c_{A}\left(q_{A}+r_{A}\right)>c_{A}r_{A}+c_{B}\left(q_{A}+q_{B}+r_{A}\right)
+\]
+
+\end_inset
+
+which is true when
+\begin_inset Formula 
+\[
+\left(\frac{c_{A}}{c_{B}}-1\right)q_{A}-q_{B}>r_{A}
+\]
+
+\end_inset
+
+That is, the first party will cheat only if the value of the original chain
+ 
+\begin_inset Formula $(c_{A})$
+\end_inset
+
+ in terms of the upgraded chain (
+\begin_inset Formula $c_{B}$
+\end_inset
+
+) is particularly high, and 
+\begin_inset Formula $r_{A}$
+\end_inset
+
+ can be chosen in advance to set this requirement to a particular value.
+ 
+\end_layout
+
+\begin_layout Standard
+Similar logic applies for the second party revealing 
+\begin_inset Formula $k_{B}$
+\end_inset
+
+; and a similar set of contracts can be produced to provide a market for
+ case A.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "sc-btc-2017"
+options "ajunsrturl"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

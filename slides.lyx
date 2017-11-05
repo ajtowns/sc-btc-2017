@@ -1,0 +1,2916 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% or ...
+
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 0
+\use_package mhchem 1
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This file is a solution template for:
+\end_layout
+
+\begin_layout Itemize
+Talk at a conference/colloquium.
+ 
+\end_layout
+
+\begin_layout Itemize
+Talk length is about 20min.
+ 
+\end_layout
+
+\begin_layout Itemize
+Style is ornate.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+In principle, this file can be redistributed and/or modified under the terms
+ of the GNU Public License, version 2.
+ However, this file is supposed to be a template to be modified for your
+ own needs.
+ For this reason, if you use this file as a template and not specifically
+ distribute it as part of a another package/program, the author grants the
+ extra permission to freely copy and modify this file as you see fit and
+ even to delete this copyright notice.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Changes without unanimous consent
+\end_layout
+
+\begin_layout Author
+Anthony Towns
+\end_layout
+
+\begin_layout Date
+Scaling Bitcoin, 2017
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The following causes the table of contents to be shown at the beginning
+ of every subsection.
+ Delete this, if you do not want it.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSubsection[]{%
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Outline}   
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection,currentsubsection] 
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Outline
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Structuring a talk is a difficult task and the following structure may not
+ be suitable.
+ Here are some rules that apply for this solution: 
+\end_layout
+
+\begin_layout Itemize
+Exactly two or three sections (other than the summary).
+ 
+\end_layout
+
+\begin_layout Itemize
+At *most* three subsections per section.
+ 
+\end_layout
+
+\begin_layout Itemize
+Talk about 30s to 2min per frame.
+ So there should be between about 15 and 30 frames, all told.
+\end_layout
+
+\begin_layout Itemize
+A conference audience is likely to know very little of what you are going
+ to talk about.
+ So *simplify*! 
+\end_layout
+
+\begin_layout Itemize
+In a 20min talk, getting the main ideas across is hard enough.
+ Leave out details, even if it means being less precise than you think necessary.
+ 
+\end_layout
+
+\begin_layout Itemize
+If you omit details that are vital to the proof/implementation, just say
+ so once.
+ Everybody will be happy with that.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Chain splits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+What's this talk really about?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+
+\emph on
+Consensus
+\emph default
+ changes without unanimous consent
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Consensus changes without consensus?
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+Really about: chain split
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unanimous consent
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+If you do have unanimous consent, everything works great!
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Developers are happy to update their software
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Changes are clearly specified, and make sense
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+People running nodes are happy to deploy it
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+No security holes, upgrade challenges, extra costs
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+Miners are happy to deploy and signal
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+No hits to profit, no PoW on old chain, no split!
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+5-
+\end_layout
+
+\end_inset
+
+Economy is happy to maintain and increase value
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Step 4: ...
+ PROFIT
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Scaling and disagreements
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+But that only works if everyone agrees, and growth makes agreement less
+ likely
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Disagreements over goals
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+eg, government buys into Bitcoin, then wants to make it hard for criminals
+ to use by reducing anonymitiy
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Unclear what the impact of a change will be
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Perfect knowledge might imply consent, but what if some people just don't
+ see it?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+Non-Pareto improvements
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+What if someone is actually made worse off? Perhaps an upgrade makes some
+ mining hardware less efficient...
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+5-
+\end_layout
+
+\end_inset
+
+Implementation bugs
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+More developers = more bugs? More developers = more bugs 
+\emph on
+found
+\emph default
+ ?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+6-
+\end_layout
+
+\end_inset
+
+Stategic disagreements
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Splits are cheap
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Splitting is cheap
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+change a few lines of code
+\end_layout
+
+\begin_layout Itemize
+change the proof of work rules
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+No matter how undesirable it is, you can't stop it.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+So saying 
+\begin_inset Quotes eld
+\end_inset
+
+Bitcoin is great as is – let's not change anything
+\begin_inset Quotes erd
+\end_inset
+
+ isn't a solution either.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Approaches to change
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Easy changes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+Uncontroversial
+\emph default
+ soft-forks
+\end_layout
+
+\begin_layout Itemize
+Simple, 
+\emph on
+uncontroversial
+\emph default
+, emergency hard-fork
+\end_layout
+
+\begin_layout Itemize
+Long-buried, 
+\emph on
+uncontroversial
+\emph default
+, hard fork
+\end_layout
+
+\begin_layout Itemize
+All of these work great!
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Everything else
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Contentious hard-forks
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+People want to maintain unupgraded chain
+\end_layout
+
+\begin_layout Itemize
+→ SPLIT
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Quick hard-forks
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+People don't have time to upgrade
+\end_layout
+
+\begin_layout Itemize
+Un-upgraded nodes run un-upgraded chain
+\end_layout
+
+\begin_layout Itemize
+→ SPLIT
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Contentious User-activated Soft-forks
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Un-upgraded chain remains viable
+\end_layout
+
+\begin_layout Itemize
+People still want it
+\end_layout
+
+\begin_layout Itemize
+→ SPLIT
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Who decides what we get
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Core developers?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If it's controversial, devs will disagree too
+\end_layout
+
+\begin_layout Itemize
+And they don't want to decide anyway
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Miners?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If everyone decides to defer to them, sure! (BIP9, etc)
+\end_layout
+
+\begin_layout Itemize
+If not, probably not
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We'll get more data in a couple of weeks!
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+Nodes?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nope, way too easy to replace them
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Who decides what we get
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The Economy
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Provides the reason devs work
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Either philosophically, or the paycheque
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Pays miners
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Block rewards only let you pay for electricity if Bitcoin has value
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+How does the economy decide
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The economy gives a value for Bitcoin
+\end_layout
+
+\begin_layout Itemize
+That is, will trade Bitcoin for goods and services
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Buy Bitcoin — give goods/services, get Bitcoin
+\end_layout
+
+\begin_layout Itemize
+Sell Bitcoin — give Bitcoin, get goods/services
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+One way or another, the economy wants some sort of market in order to exercise
+ its power
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Change, or don't
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+What are we talking about?
+\end_layout
+
+\begin_layout Itemize
+Someone proposes a change
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+...to consensus rules
+\end_layout
+
+\begin_layout Itemize
+Specific and explicit about what changes
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Everyone adopts the change
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Release new versions of software
+\end_layout
+
+\begin_layout Itemize
+Update nodes
+\end_layout
+
+\begin_layout Itemize
+Care about who owns how much according to the new rules
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Or nobody adopts the change, and stick with the current rules
+\end_layout
+
+\begin_layout Itemize
+Or some people do and some don't
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathcal{N}}
+{\mathcal{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathcal{E}}
+{\mathcal{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\S}{\mathcal{S}}
+{\mathcal{S}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Price formula
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Someone proposes a change, what's the expected value of the coin now?
+\begin_inset Formula 
+\[
+c=p_{\N}\cdot a+p_{\E}\cdot b+p_{\S}\left(\alpha+\beta\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Trading coins
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Can gain pricing information by trading coins (atomic swaps, BitFinex markets,
+ etc)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Three types of markets:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Unconditional: someone gets coins on old chain, other person gets coins
+ on changed chain
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+Split or refund: trade only takes place if a split occurs (refund if there's
+ only one chain, whichever that is)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+5-
+\end_layout
+
+\end_inset
+
+Activation or refund: trade only takes place if the changed rules activate
+ (refund if only the old chain works)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+But!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+But three markets and our expected value equation
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\size footnotesize
+and 
+\begin_inset Formula $p_{\N}+p_{\E}+p_{\S}=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ gives us five equations...
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+...in seven unknowns
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+So this is only enough to give us values for
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(p_{\N}\cdot a\right)$
+\end_inset
+
+, 
+\begin_inset Formula $\left(p_{\E}\cdot b\right)$
+\end_inset
+
+, 
+\begin_inset Formula $\left(p_{\S}\cdot\alpha\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(p_{\S}\cdot\beta\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+But is one of those figures low because:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+that chain would not be very valuable?
+\end_layout
+
+\begin_layout Itemize
+or just because it's not likely to exist?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Prediction market
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+A prediction market can solve this and give values for the probabilities
+\end_layout
+
+\begin_layout Itemize
+But not if it's denominated in Bitcoin
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+...and probably not if it's in any other cryptocurrency
+\end_layout
+
+\begin_layout Itemize
+(unless it's one that's not correlated with Bitcoin's value)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Lack of price discovery
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+What happens if you don't have these sorts of markets?
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Suppose everyone knows that a split is coming: 
+\begin_inset Formula $p_{\S}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $c=\alpha+\beta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+But there isn't a good market price for 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ (or 
+\begin_inset Formula $p_{\S}\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{\S}\beta$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Then different people can have different values for 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ — 
+\begin_inset Formula $c=\alpha_{1}+\beta_{1}=\alpha_{2}+\beta_{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $\alpha_{1}>\alpha_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{2}>\beta_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+And after the split, people with higher values for 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ will buy the old chain and vice-versa
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Leading to a price rise — 
+\begin_inset Formula $c^{\prime}=\alpha_{1}+\beta_{2}>c$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+ like we got when Bitcoin Cash forked
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Subsection
+Costs
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Splitting is expensive
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Splitting the chain has lots of negative externalities
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Updating wallets, miners, node software
+\end_layout
+
+\begin_layout Itemize
+P2P confusion
+\end_layout
+
+\begin_layout Itemize
+Miners need to choose which chain to mine
+\end_layout
+
+\begin_layout Itemize
+Exchanges need to add new tokens, futures, ...
+\end_layout
+
+\begin_layout Itemize
+Dumb contracts have to be updated
+\end_layout
+
+\begin_layout Itemize
+People have to pay on-chain fees to rebalance
+\end_layout
+
+\begin_layout Itemize
+People get confused
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Splitting is expensive
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Maintaining the PoW algorithm is expensive
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+and also somewhat quantifiable!
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The first blocks until retarget have to be mined at old difficulty on both
+ chains
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+receiving about 
+\begin_inset Formula $2016\times12.5\times\left(\alpha+\beta\right)$
+\end_inset
+
+ in value for 
+\begin_inset Formula $2016\times2\times d$
+\end_inset
+
+ work
+\end_layout
+
+\begin_layout Itemize
+vs 
+\begin_inset Formula $2016\times12.5\times a$
+\end_inset
+
+ value for 
+\begin_inset Formula $2016\times1\times d$
+\end_inset
+
+ work
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For a given amount of hashpower, potentially a loss of an entire two week's
+ mining revenue
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Subsidising miners is expensive
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+If the PoW rules aren't changed, miners will strongly prefer the higher
+ valued chain
+\end_layout
+
+\begin_layout Itemize
+So to sustain the lower value chain until the value vs difficulty ratios
+ equalise, subsidies are needed
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+eg, transactions paying higher fees, off-book payments to miners, miners
+ not optimising for short-term profit
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+These aren't cheap — can cost over 20,000 BTC if one chain is worth less
+ than a quarter of the other
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Block Commitments
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Replay protection
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+First step to making chain splits not horrible: prevent replay
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Ideally, do this generically, so that neither chain has to admit to 
+\begin_inset Quotes eld
+\end_inset
+
+causing
+\begin_inset Quotes erd
+\end_inset
+
+ the split by implementing replay protection
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Ideally, get it implemented in core, so that whenever someone random causes
+ a chain split, everyone gets replay protection for free
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+If selling coins is easy, coins causing split have low expected value, so
+ splits aren't profitable, and happen less?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Transactions commit to block history
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+An obvious way of preventing replay is for transactions to commit to a particula
+r block being in the history.
+\end_layout
+
+\begin_layout Itemize
+BIP
+\begin_inset space ~
+\end_inset
+
+115 proposes OP_CHECKBLOCKATHEIGHT
+\end_layout
+
+\begin_layout Itemize
+Side benefit: makes recovering from some double spends easier, even without
+ consensus changes
+\end_layout
+
+\begin_layout Itemize
+Has the disadvantage that you need to explcitly specify the block hash (or
+ at least the ending bytes thereof)
+\end_layout
+
+\begin_layout Itemize
+Requires two transactions to actually split the coin
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Signatures commit to block history
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Instead of having an opcode, have a SIGHASH_BLOCKCOMMIT flag.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Allow specifying a block as part of the signature
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+2 byte nHashOffset in the signature, nLockTime from the transaction,
+\end_layout
+
+\begin_layout Itemize
+block height is 
+\begin_inset Formula ${\tt nLockTime}-{\tt nHashOffset}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Add the given block height's hash when calculating the hash to sign (as
+ well as nHashOffset)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+If nHashOffset is zero, use the genesis block to make locking a transaction
+ to testnet or litecoin easy too
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Benefits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Can handle a chain split with just two pieces of information:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The height at which the chain split
+\end_layout
+
+\begin_layout Itemize
+The hash of the first block on your preferred chain
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Replay protection: just always commit to that block (or one after it) when
+ signing transactions
+\end_layout
+
+\begin_layout Itemize
+Wipeout protection: checkpoint that block, and don't it to be reorged
+\end_layout
+
+\begin_layout Itemize
+Easy to do even with SPV/light clients
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Additions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+BIP 115 proposes only verifying block history back to about 52000 blocks
+\end_layout
+
+\begin_layout Itemize
+This way clients don't need to have even the complete set of block headers
+ available to verify signatures
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Can more or less duplicate this by allowing the signature to specify the
+ block hash explicitly:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Add the block hash to the signature, an extra 32 (or fewer) bytes of witness
+ data
+\end_layout
+
+\begin_layout Itemize
+Require the specified block hash to match the actual block hash at the given
+ height (if known)
+\end_layout
+
+\begin_layout Itemize
+If the block being referenced is 52000+ blocks deep require the signature
+ to specify the block hash
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Additions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+What happens if there's an orphan block?
+\end_layout
+
+\begin_layout Itemize
+Maybe some transactions were signed depending on the block and become invalid
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+What if those transactions paid you, and you already spent them? Argh.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+So perhaps add a rule:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula ${\tt nHashOffset}>100$
+\end_inset
+
+ — consensus rule, transactions are only invalidated if there's a huge reorg
+ or there's a consensus split; 
+\series bold
+OR
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\tt nLockTime}-{\tt nHashOffset}+100<{\tt tip}$
+\end_inset
+
+ — standardness rule, transactions in mempool won't be invalidated but transacti
+ons in a block might be
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Section
+BIP Commitments
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Replay protection 
+\begin_inset Formula $\ne$
+\end_inset
+
+ Price discovery
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+That's great for replay protection
+\end_layout
+
+\begin_layout Itemize
+But it doesn't really let you do price discovery in advance of a split.
+\end_layout
+
+\begin_layout Itemize
+You can't commit to a trade until the first forking blocks are mined
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Commit to a BIP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Instead of committing to a block hash, commit to a BIP's activation status
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Same approach:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+SIGHASH_BIPCOMMIT flag
+\end_layout
+
+\begin_layout Itemize
+Need a couple of bytes to specify a BIP
+\end_layout
+
+\begin_layout Itemize
+Also need a bit to specify whether the BIP should be active in inactive
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Does require implementations to have a BIP number assigned, and does require
+ them to code that BIP number in their implementation.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+But segwit2x doesn't have a BIP.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+5-
+\end_layout
+
+\end_inset
+
+Well, they have BIP102...
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Making this soft-fork compatible
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+But what about soft-fork upgrades?
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Version 0.19 comes out with BIP365 via UASF.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+Everyone agrees that BIP365 support is essential.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Market valuation: cost of a pizza will be 20,000 non-BIP365 coins!
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+BIP365 is activated.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+You make a transaction signed with SIGHASH_BIPCOMMIT 365 active.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+5-
+\end_layout
+
+\end_inset
+
+If someone is still running 0.18 do they see your transaction as valid?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+No? Then it's not a soft-fork
+\end_layout
+
+\begin_layout Itemize
+Yes? How does 0.18 know BIP 365 is active when it wasn't even written yet?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Still able to be messed with
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+If an implementation knowns (and implements) the BIP's rules, everything
+ is fine.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+If it doesn't, it needs to track unknown BIPs by what signatures they see:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If a block includes a signature saying a BIP is activated, then
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+no other transaction in the block can assert it's inactive
+\end_layout
+
+\begin_layout Itemize
+no transaction in any later block can assert it's inactive
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+If a block includes a signature saying a BIP is inactive, then
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+no other transaction in the same block can want it to be active
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+But this would let miners confuse things:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+BIP 720 is written and sounds good to miners, but isn't implemented anywhere
+\end_layout
+
+\begin_layout Itemize
+Miners mine a few transactions with SIGHASH_BIPCOMMIT BIP720 active
+\end_layout
+
+\begin_layout Itemize
+When implementations come out, trying to avoid BIP 720 forces a huge reorg
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Limited protection
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Can fix this by having implementations update regularly, and forbid activation
+ of unknown BIPs while they're current.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+0.18 comes out: for six months, it rejects any block that contains a transaction
+ with a signature requiring any unknown BIP to be activated; but then relaxes
+ this rule.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Six months after 0.18 comes out, 0.19 comes out: for six months, it similarly
+ rejects commitments to unknown BIPs being active
+\end_layout
+
+\begin_layout Itemize
+And so on.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Limited protection
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Properties:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+Unknown BIPs are rejected by current versions of node software at all times
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+2-
+\end_layout
+
+\end_inset
+
+New BIPs are allowed by the latest updates (which know about them) and older
+ versions (because they've relaxed the rules)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+3-
+\end_layout
+
+\end_inset
+
+Software releases must be somewhat regular
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Though only need a minor release bumping the timeout
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+4-
+\end_layout
+
+\end_inset
+
+Soft-fork deployments must have at least a six month period between specificatio
+n and explanation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Hard-forks can happen at any time, though
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Price discovery via BIP commitment
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+1-
+\end_layout
+
+\end_inset
+
+This is enough to establish Bitcoin-vs-Bitcoin markets
+\end_layout
+
+\begin_layout Itemize
+Which is enough to establish conditional valuations (ie, 
+\begin_inset Formula $p_{\N}a$
+\end_inset
+
+, 
+\begin_inset Formula $p_{\E}b$
+\end_inset
+
+, etc).
+\end_layout
+
+\begin_layout Itemize
+It can be done mostly trustlessly
+\end_layout
+
+\begin_layout Itemize
+Markets offering a refund need some way to distinguish whether alternative
+ consensus rules have activated or a chain split has occurred:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Trusted oracle
+\end_layout
+
+\begin_layout Itemize
+Crypto proof of split/activation
+\end_layout
+
+\begin_layout Itemize
+Economic incentive — each participant puts up a ransom, 
+\begin_inset Formula $r$
+\end_inset
+
+, which they lose if they lie
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Provided the other chain is worth 
+\begin_inset Formula $f(r)\%$
+\end_inset
+
+ of this coin's value, cheating isn't profitable
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+No need for a trusted exchange, however!
+\end_layout
+
+\end_deeper
+\begin_layout Section*
+Conclusion
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Conclusion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Consensus on consensus is hard, and getting harder.
+\end_layout
+
+\begin_layout Itemize
+Splits are easy.
+\end_layout
+
+\begin_layout Itemize
+We can make splits hurt less.
+\end_layout
+
+\begin_layout Itemize
+We can let the economy make better decisions on splits.
+\end_layout
+
+\begin_layout Itemize
+
+\color none
+Thanks for listening!
+\end_layout
+
+\begin_layout Itemize
+More details at 
+\family typewriter
+http://github.com/ajtowns/sc-btc-2017
+\end_layout
+
+\end_deeper
+\end_body
+\end_document
